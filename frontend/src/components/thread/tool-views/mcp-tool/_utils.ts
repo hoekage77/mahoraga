@@ -339,7 +339,7 @@ export function getMCPServerIcon(serverName: string) {
 export function getMCPServerColor(serverName: string) {
   switch (serverName.toLowerCase()) {
     case 'exa':
-      return 'from-blue-500/20 to-blue-600/10 border-blue-500/20';
+      return 'from-red-500/20 to-red-600/10 border-red-500/20';
     case 'github':
       return 'from-purple-500/20 to-purple-600/10 border-purple-500/20';
     case 'notion':

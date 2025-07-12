@@ -20,10 +20,10 @@ export function FooterSection() {
   }, []);
 
   const logoSrc = !mounted
-    ? '/kortix-logo.svg'
+    ? '/kage.svg'
     : resolvedTheme === 'dark'
-      ? '/kortix-logo-white.svg'
-      : '/kortix-logo.svg';
+      ? '/kage-logo-white.svg'
+      : '/kage.svg';
 
   return (
     <footer id="footer" className="w-full pb-0">
@@ -32,7 +32,7 @@ export function FooterSection() {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src={logoSrc}
-              alt="Kortix Logo"
+              alt="Agent X Logo"
               width={122}
               height={22}
               priority
@@ -44,7 +44,7 @@ export function FooterSection() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/kortix-ai/suna"
+              href="https://github.com/agentx-ai/agentx"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -61,7 +61,7 @@ export function FooterSection() {
               </svg>
             </a>
             <a
-              href="https://x.com/kortixai"
+              href="https://x.com/agentxai"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
@@ -78,7 +78,7 @@ export function FooterSection() {
               </svg>
             </a>
             <a
-              href="https://www.linkedin.com/company/kortix/"
+              href="https://www.linkedin.com/company/agentx/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -130,7 +130,7 @@ export function FooterSection() {
         </div>
       </div>
       <Link
-        href="https://www.youtube.com/watch?v=nuf5BF1jvjQ"
+        href="https://www.youtube.com/watch"
         target="_blank"
         rel="noopener noreferrer"
         className="block w-full h-48 md:h-64 relative mt-24 z-0 cursor-pointer"

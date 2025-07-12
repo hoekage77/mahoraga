@@ -120,13 +120,13 @@ export const getOperationConfigs = (): Record<FileOperation, OperationConfig> =>
   },
   rewrite: {
     icon: Replace,
-    color: 'text-blue-600 dark:text-blue-400',
+    color: 'text-red-600 dark:text-red-400',
     successMessage: 'File rewritten successfully',
     progressMessage: 'Rewriting file...',
-    bgColor: 'bg-gradient-to-b from-blue-100 to-blue-50 shadow-inner dark:from-blue-800/40 dark:to-blue-900/60 dark:shadow-blue-950/20',
-    gradientBg: 'bg-gradient-to-br from-blue-500/20 to-blue-600/10',
-    borderColor: 'border-blue-500/20',
-    badgeColor: 'bg-gradient-to-b from-blue-200 to-blue-100 text-blue-700 shadow-sm dark:from-blue-800/50 dark:to-blue-900/60 dark:text-blue-300',
+    bgColor: 'bg-gradient-to-b from-red-100 to-red-50 shadow-inner dark:from-red-800/40 dark:to-red-900/60 dark:shadow-red-950/20',
+    gradientBg: 'bg-gradient-to-br from-red-500/20 to-red-600/10',
+    borderColor: 'border-red-500/20',
+    badgeColor: 'bg-gradient-to-b from-red-200 to-red-100 text-red-700 shadow-sm dark:from-red-800/50 dark:to-red-900/60 dark:text-red-300',
     hoverColor: 'hover:bg-neutral-200 dark:hover:bg-neutral-800'
   },
   delete: {

@@ -65,7 +65,7 @@ const fetchAgentTools = async (agentId: string): Promise<AgentToolsResponse> => 
   const agentpressTools: AgentTool[] = [];
   const defaultTools: Record<string, { description: string; icon: string; color: string }> = {
     'sb_shell_tool': { description: 'Execute shell commands in tmux sessions', icon: '💻', color: 'bg-slate-100' },
-    'sb_files_tool': { description: 'Create, read, update, and delete files', icon: '📁', color: 'bg-blue-100' },
+    'sb_files_tool': { description: 'Create, read, update, and delete files', icon: '📁', color: 'bg-red-100' },
     'sb_browser_tool': { description: 'Browser automation and web navigation', icon: '🌐', color: 'bg-indigo-100' },
     'sb_deploy_tool': { description: 'Deploy applications and services', icon: '🚀', color: 'bg-green-100' },
     'sb_expose_tool': { description: 'Expose services and manage ports', icon: '🔌', color: 'bg-orange-100' },

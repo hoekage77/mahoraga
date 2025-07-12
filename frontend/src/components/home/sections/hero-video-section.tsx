@@ -12,7 +12,7 @@ export function HeroVideoSection() {
           Watch Intelligence in Motion
         </h2>
         <p className="text-muted-foreground text-center text-balance font-medium">
-          Watch how Suna executes complex workflows with precision and autonomy
+          Watch how Xera executes complex workflows with precision and autonomy
         </p>
       </SectionHeader>
 
@@ -21,16 +21,16 @@ export function HeroVideoSection() {
           <HeroVideoDialog
             className="block dark:hidden"
             animationStyle="from-center"
-            videoSrc="https://www.youtube.com/embed/Jnxq0osSg2c?si=k8ddEM8h8lver20s"
-            thumbnailSrc="/thumbnail-light.png"
-            thumbnailAlt="Hero Video"
+            videoSrc="https://www.youtube.com/embed/2USUfv7klr8"
+            thumbnailSrc="/xera-thumbnail-light.png"
+            thumbnailAlt="Xera Demo Video"
           />
           <HeroVideoDialog
             className="hidden dark:block"
             animationStyle="from-center"
-            videoSrc="https://www.youtube.com/embed/Jnxq0osSg2c?si=k8ddEM8h8lver20s"
-            thumbnailSrc="/thumbnail-dark.png"
-            thumbnailAlt="Hero Video"
+            videoSrc="https://www.youtube.com/embed/2USUfv7klr8"
+            thumbnailSrc="/xera-thumbnail-dark.png"
+            thumbnailAlt="Xera Demo Video"
           />
         </div>
       </div>

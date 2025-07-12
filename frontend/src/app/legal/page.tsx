@@ -157,10 +157,10 @@ function LegalContent() {
                     <p className="text-muted-foreground text-balance mb-6">
                       PLEASE READ THESE TERMS OF USE ("AGREEMENT" OR "TERMS OF
                       USE" or "TERMS OF SERVICE" or "TERMS AND CONDITIONS")
-                      CAREFULLY BEFORE USING THE SERVICES OFFERED BY Kortix AI
-                      Corp (701 Tillery Street Unit 12-2521 Austin, Texas 78702,
+                      CAREFULLY BEFORE USING THE SERVICES OFFERED BY Kage AI
+                      Corp (, Texas,
                       United States). THIS AGREEMENT SETS FORTH THE LEGALLY
-                      BINDING TERMS AND CONDITIONS FOR YOUR USE OF THE SUNA
+                      BINDING TERMS AND CONDITIONS FOR YOUR USE OF THE XERA
                       WEBSITE AND ALL RELATED SERVICES.
                     </p>
 
@@ -169,16 +169,16 @@ function LegalContent() {
                     </h3>
                     <ul className="text-muted-foreground space-y-1 mb-6">
                       <li>
-                        "Company" refers to Kortix AI Corp (701 Tillery Street
-                        Unit 12-2521 Austin, Texas 78702, United States).
+                        "Company" refers to Kage AI Corp (, Texas,
+                        United States).
                       </li>
                       <li>
-                        "Site" refers to the Suna website, including any related
+                        "Site" refers to the Xera website, including any related
                         features, content, or applications offered from time to
                         time by the Company.
                       </li>
                       <li>
-                        "Service" refers to the Suna website and all related
+                        "Service" refers to the Xera website and all related
                         services provided by the Company, including the
                         AI-powered agent that helps you accomplish real-world
                         tasks.
@@ -216,7 +216,7 @@ function LegalContent() {
                       </li>
                       <li>
                         "Notice Address" refers to the contact address for the
-                        Company, specifically legal@kortix.ai
+                        Company, specifically legal@kage.ai
                       </li>
                       <li>
                         "Privacy Policy" refers to the document outlining how
@@ -394,7 +394,7 @@ function LegalContent() {
                       held by others. We respect rights holders internationally,
                       and we ask our users to do the same. If you believe your
                       copyright or trademark is being infringed by the Service,
-                      please write to legal@kortixai.com and we will process and
+                      please write to legal@kage.ai and we will process and
                       investigate your request and take appropriate actions
                       under the Digital Millennium Copyright Act and other
                       applicable intellectual property laws with respect to any
@@ -410,7 +410,7 @@ function LegalContent() {
                       subscription, payable in U.S. dollars, that will
                       automatically renew. You can stop using the Service and
                       cancel your subscription at any time through the website
-                      or by emailing us at legal@kortixai.com. If you cancel
+                      or by emailing us at legal@kage.ai. If you cancel
                       your subscription, you may not receive a refund or credit
                       for any amounts that have already been billed or paid. The
                       Company reserves the right to change its prices at any
@@ -688,10 +688,10 @@ function LegalContent() {
                       For questions regarding the Service, you can get in touch
                       by emailing us at{' '}
                       <a
-                        href="mailto:legal@kortixai.com"
+                        href="mailto:legal@kage.ai"
                         className="text-secondary hover:underline"
                       >
-                        legal@kortixai.com
+                        legal@kage.ai
                       </a>
                       .
                     </p>
@@ -912,10 +912,10 @@ function LegalContent() {
                     <p className="text-muted-foreground text-balance">
                       You can get in touch by emailing us at{' '}
                       <a
-                        href="mailto:legal@kortixai.com"
+                        href="mailto:legal@kage.ai"
                         className="text-secondary hover:underline"
                       >
-                        legal@kortixai.com
+                        legal@kage.ai
                       </a>
                       .
                     </p>
