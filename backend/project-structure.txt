@@ -1,0 +1,168 @@
+.
+├── Dockerfile
+├── MANIFEST.in
+├── README.md
+├── agent
+│   ├── __init__.py
+│   ├── agent_builder_prompt.py
+│   ├── api.py
+│   ├── config_helper.py
+│   ├── gemini_prompt.py
+│   ├── prompt.py
+│   ├── run.py
+│   ├── sample_responses
+│   │   ├── 1.txt
+│   │   ├── 2.txt
+│   │   └── 3.txt
+│   ├── tools
+│   │   ├── __init__.py
+│   │   ├── agent_builder_tools
+│   │   ├── computer_use_tool.py
+│   │   ├── data_providers
+│   │   ├── data_providers_tool.py
+│   │   ├── expand_msg_tool.py
+│   │   ├── mcp_tool_wrapper.py
+│   │   ├── message_tool.py
+│   │   ├── sb_browser_tool.py
+│   │   ├── sb_deploy_tool.py
+│   │   ├── sb_expose_tool.py
+│   │   ├── sb_files_tool.py
+│   │   ├── sb_image_edit_tool.py
+│   │   ├── sb_shell_tool.py
+│   │   ├── sb_vision_tool.py
+│   │   ├── utils
+│   │   └── web_search_tool.py
+│   ├── utils.py
+│   └── workflows.py
+├── agentpress
+│   ├── __init__.py
+│   ├── context_manager.py
+│   ├── response_processor.py
+│   ├── thread_manager.py
+│   ├── tool.py
+│   ├── tool_registry.py
+│   ├── utils
+│   │   ├── __init__.py
+│   │   └── json_helpers.py
+│   └── xml_tool_parser.py
+├── api.py
+├── docker-compose.yml
+├── flags
+│   ├── __init__.py
+│   ├── api.py
+│   ├── flags.py
+│   └── setup.py
+├── knowledge_base
+│   ├── __init__.py
+│   ├── api.py
+│   └── file_processor.py
+├── logs
+├── mcp_service
+│   ├── __init__.py
+│   ├── api.py
+│   ├── client.py
+│   ├── credential_manager.py
+│   ├── mcp_custom.py
+│   ├── mcp_providers.py
+│   ├── secure_api.py
+│   ├── template_api.py
+│   └── template_manager.py
+├── pipedream
+│   ├── __init__.py
+│   ├── api.py
+│   ├── client.py
+│   ├── profiles.py
+│   └── search_utils.py
+├── project-structure.txt
+├── pyproject.toml
+├── run_agent_background.py
+├── sandbox
+│   ├── README.md
+│   ├── api.py
+│   ├── docker
+│   │   ├── Dockerfile
+│   │   ├── README.md
+│   │   ├── browser_api.py
+│   │   ├── docker-compose.yml
+│   │   ├── entrypoint.sh
+│   │   ├── requirements.txt
+│   │   ├── server.py
+│   │   └── supervisord.conf
+│   ├── sandbox.py
+│   └── tool_base.py
+├── sentry.py
+├── services
+│   ├── __init__.py
+│   ├── billing.py
+│   ├── docker
+│   │   └── redis.conf
+│   ├── email.py
+│   ├── email_api.py
+│   ├── langfuse.py
+│   ├── llm.py
+│   ├── redis.py
+│   ├── supabase.py
+│   └── transcription.py
+├── supabase
+│   ├── config.toml
+│   ├── email-template.html
+│   ├── kong.yml
+│   └── migrations
+│       ├── 20240414161707_basejump-setup.sql
+│       ├── 20240414161947_basejump-accounts.sql
+│       ├── 20240414162100_basejump-invitations.sql
+│       ├── 20240414162131_basejump-billing.sql
+│       ├── 20250409211903_basejump-configure.sql
+│       ├── 20250409212058_initial.sql
+│       ├── 20250416133920_agentpress_schema.sql
+│       ├── 20250417000000_workflow_system.sql
+│       ├── 20250418000000_workflow_flows.sql
+│       ├── 20250504123828_fix_thread_select_policy.sql
+│       ├── 20250523133848_admin-view-access.sql
+│       ├── 20250524062639_agents_table.sql
+│       ├── 20250525000000_agent_versioning.sql
+│       ├── 20250526000000_secure_mcp_credentials.sql
+│       ├── 20250529125628_agent_marketplace.sql
+│       ├── 20250601000000_add_thread_metadata.sql
+│       ├── 20250602000000_add_custom_mcps_column.sql
+│       ├── 20250607000000_fix_encrypted_config_column.sql
+│       ├── 20250618000000_credential_profiles.sql
+│       ├── 20250624065047_secure_credentials.sql
+│       ├── 20250624093857_knowledge_base.sql
+│       ├── 20250626092143_agent_agnostic_thread.sql
+│       ├── 20250626114642_kortix_team_agents.sql
+│       ├── 20250630070510_agent_triggers.sql
+│       ├── 20250701082739_agent_knowledge_base.sql
+│       ├── 20250701083536_agent_kb_files.sql
+│       ├── 20250705155923_rollback_workflows.sql
+│       ├── 20250705161610_agent_workflows.sql
+│       ├── 20250705164211_fix_agent_workflows.sql
+│       ├── 20250706130554_simplify_workflow_steps.sql
+│       ├── 20250706130555_set_instruction_default.sql
+│       ├── 20250707140000_add_agent_run_metadata.sql
+│       ├── 20250708034613_add_steps_to_workflows.sql
+│       └── 20250708123910_cleanup_db.sql
+├── triggers
+│   ├── __init__.py
+│   ├── api.py
+│   ├── core.py
+│   ├── integration.py
+│   ├── providers
+│   │   ├── __init__.py
+│   │   └── schedule_provider.py
+│   └── registry.py
+├── utils
+│   ├── __init__.py
+│   ├── auth_utils.py
+│   ├── config.py
+│   ├── constants.py
+│   ├── encryption.py
+│   ├── files_utils.py
+│   ├── logger.py
+│   ├── retry.py
+│   └── s3_upload_utils.py
+├── uv.lock
+├── worker-logs
+└── worker_health.py
+
+24 directories, 142 files

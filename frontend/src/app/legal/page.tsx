@@ -354,7 +354,7 @@ function LegalContent() {
                       Open Source License
                     </h3>
                     <p className="text-muted-foreground text-balance mb-6">
-                      Suna is licensed under the Apache License, Version 2.0.
+                      Agent X is licensed under the Apache License, Version 2.0.
                       You may obtain a copy of the License at{' '}
                       <a
                         href="http://www.apache.org/licenses/LICENSE-2.0"
@@ -556,7 +556,7 @@ function LegalContent() {
                       Trademarks and Patents
                     </h3>
                     <p className="text-muted-foreground text-balance mb-6">
-                      All Suna logos, marks, and designations are trademarks or
+                      All Agent X logos, marks, and designations are trademarks or
                       registered trademarks of the Company. All other trademarks
                       mentioned on this website are the property of their
                       respective owners. The trademarks and logos displayed on
@@ -646,14 +646,14 @@ function LegalContent() {
                     <p className="text-muted-foreground text-balance mb-6">
                       ALL USE OF THE SERVICE AND ANY CONTENT IS UNDERTAKEN
                       ENTIRELY AT YOUR OWN RISK. THE SERVICE (INCLUDING, WITHOUT
-                      LIMITATION, THE SUNA WEB APP AND ANY CONTENT) IS PROVIDED
+                      LIMITATION, THE Agent X WEB APP AND ANY CONTENT) IS PROVIDED
                       "AS IS" AND "AS AVAILABLE" AND IS WITHOUT WARRANTY OF ANY
                       KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
                       THE IMPLIED WARRANTIES OF TITLE, NON-INFRINGEMENT,
                       MERCHANTABILITY, AND FITNESS FOR A PARTICULAR PURPOSE, AND
                       ANY WARRANTIES IMPLIED BY ANY COURSE OF PERFORMANCE OR
                       USAGE OF TRADE, ALL OF WHICH ARE EXPRESSLY DISCLAIMED.
-                      SUNA DOES NOT GUARANTEE THE ACCURACY, COMPLETENESS, OR
+                      Agent X DOES NOT GUARANTEE THE ACCURACY, COMPLETENESS, OR
                       RELIABILITY OF THE AI-GENERATED CONTENT, AND USERS ASSUME
                       FULL RESPONSIBILITY FOR ANY APPLICATIONS CREATED USING THE
                       SERVICE. SOME STATES DO NOT ALLOW LIMITATIONS ON HOW LONG
@@ -719,7 +719,7 @@ function LegalContent() {
                     </p>
 
                     <p className="text-muted-foreground text-balance mb-6">
-                      References to our "Services" at Suna in this statement
+                      References to our "Services" at Agent X in this statement
                       include our website, apps, and other products and
                       services. This statement applies to our Services that
                       display or reference this Privacy Statement. Third-party
@@ -728,7 +728,7 @@ function LegalContent() {
                     </p>
 
                     <p className="text-muted-foreground text-balance mb-6">
-                      Suna does not collect biometric or identifying
+                      Agent X does not collect biometric or identifying
                       information. All data is processed securely and any data
                       is deleted upon account removal.
                     </p>

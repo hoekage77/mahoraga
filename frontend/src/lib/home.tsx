@@ -1229,21 +1229,16 @@ export const siteConfig = {
     {
       title: 'Kage',
       links: [
-        { id: 1, title: 'About', url: 'https://kage.ai' },
-        { id: 3, title: 'Contact', url: 'mailto:hey@kage.ai' },
-        { id: 4, title: 'Careers', url: 'https://kage.ai/careers' },
+        { id: 1, title: 'About', url: 'https://agentx.ai' },
+        { id: 3, title: 'Contact', url: 'mailto:hey@agentx.ai' },
+        
       ],
     },
     {
       title: 'Resources',
       links: [
-        {
-          id: 5,
-          title: 'Documentation',
-          url: 'https://github.com/agentx-ai/agentx',
-        },
-        { id: 7, title: 'Discord', url: 'https://discord.gg/Py6pCBUUPw' },
-        { id: 8, title: 'GitHub', url: 'https://github.com/agentx-ai/agentx' },
+        { id: 7, title: 'Discord', url: '#' },
+        { id: 8, title: 'GitHub', url: '#' },
       ],
     },
     {
