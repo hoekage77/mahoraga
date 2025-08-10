@@ -149,9 +149,7 @@ def prepare_params(
         params["top_p"] = top_p
 
     # Temperature handling
-    # Some providers (e.g., GPT-5/o1/o3) reject any non-default temperature values and
-    # some SDKs inject a default temperature=0 if not explicitly set.
-    # To prevent errors, force temperature=1.0 for fixed-temp models; otherwise use provided value.
+    # Force 1.0 for fixed-temp models (GPT-5/o1/o3) to avoid LiteLLM injecting 0
     if _has_fixed_temperature(model_name):
         params["temperature"] = 1.0
     else:
@@ -343,6 +341,13 @@ async def make_llm_api_call(
         enable_thinking=enable_thinking,
         reasoning_effort=reasoning_effort
     )
+
+    # Defensive guard: ensure fixed-temp models never send temperature=0
+    if _has_fixed_temperature(model_name) and params.get("temperature") != 1.0:
+        logger.warning(f"Fixed-temp model detected ({model_name}). Forcing temperature to 1.0 before request.")
+        params["temperature"] = 1.0
+    logger.debug(f"Resolved temperature param: {params.get('temperature', '<omitted>')} for model {model_name}")
+
     last_error = None
     for attempt in range(MAX_RETRIES):
         try:
