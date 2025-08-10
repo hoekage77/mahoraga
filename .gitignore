@@ -202,3 +202,8 @@ backend/.test_token_compression.py
 backend/test_token_compression_data.py
 
 dump.rdb
+AGENT_SYSTEM_ARCHITECTURE.md
+CEO_PRESENTATION.html
+MERMAID_VIEWER.html
+PROJECT_TRACKER.html
+SYSTEM_ARCHITECTURE.md

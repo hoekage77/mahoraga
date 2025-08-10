@@ -7,9 +7,9 @@ import { useAvailableModels } from '@/hooks/react-query/subscriptions/use-model'
 
 export const STORAGE_KEY_MODEL = 'suna-preferred-model-v2';
 export const STORAGE_KEY_CUSTOM_MODELS = 'customModels';
-export const DEFAULT_PREMIUM_MODEL_ID = 'claude-sonnet-4';
+export const DEFAULT_PREMIUM_MODEL_ID = 'gpt-5-2025-08-07';
 // export const DEFAULT_FREE_MODEL_ID = 'deepseek';
-export const DEFAULT_FREE_MODEL_ID = 'claude-sonnet-4';
+export const DEFAULT_FREE_MODEL_ID = 'gpt-5-nano-2025-08-07';
 
 export type SubscriptionStatus = 'no_subscription' | 'active';
 
@@ -31,6 +31,12 @@ export interface CustomModel {
 // SINGLE SOURCE OF TRUTH for all model data - aligned with backend constants
 export const MODELS = {
   // Free tier models (available to all users)
+  'gpt-5-nano-2025-08-07': {
+    tier: 'free',
+    priority: 105,
+    recommended: true,
+    lowQuality: false,
+  },
   'claude-sonnet-4': { 
     tier: 'free',
     priority: 100, 
@@ -52,6 +58,18 @@ export const MODELS = {
   },
 
   // Premium/Paid tier models (require subscription)
+  'gpt-5-2025-08-07': {
+    tier: 'premium',
+    priority: 120,
+    recommended: true,
+    lowQuality: false,
+  },
+  'gpt-5-mini-2025-08-07': {
+    tier: 'premium',
+    priority: 110,
+    recommended: true,
+    lowQuality: false,
+  },
   'sonnet-3.7': { 
     tier: 'premium', 
     priority: 99, 
@@ -196,13 +214,13 @@ export const useModelSelection = () => {
       models = [
         { 
           id: DEFAULT_FREE_MODEL_ID, 
-          label: 'DeepSeek', 
+          label: formatModelName(DEFAULT_FREE_MODEL_ID), 
           requiresSubscription: false,
           priority: MODELS[DEFAULT_FREE_MODEL_ID]?.priority || 50
         },
         { 
           id: DEFAULT_PREMIUM_MODEL_ID, 
-          label: 'Sonnet 4', 
+          label: formatModelName(DEFAULT_PREMIUM_MODEL_ID), 
           requiresSubscription: true, 
           priority: MODELS[DEFAULT_PREMIUM_MODEL_ID]?.priority || 100
         },
@@ -238,6 +256,23 @@ export const useModelSelection = () => {
           lowQuality: modelData.lowQuality || false,
           recommended: modelData.recommended || false
         };
+      });
+
+      // Ensure GPT-5 family is present and ordered even if API omits them
+      const ensureIds = ['gpt-5-2025-08-07', 'gpt-5-mini-2025-08-07', 'gpt-5-nano-2025-08-07'];
+      ensureIds.forEach(id => {
+        if (!models.some(m => m.id === id)) {
+          const md: any = (MODELS as any)[id] || {};
+          models.push({
+            id,
+            label: formatModelName(id),
+            requiresSubscription: md.tier === 'premium',
+            top: (md.priority || 0) >= 90,
+            priority: md.priority || 0,
+            lowQuality: md.lowQuality || false,
+            recommended: md.recommended || false
+          });
+        }
       });
     }
     

@@ -10,6 +10,17 @@ MODELS = {
         },
         "tier_availability": ["free", "paid"]
     },
+    
+    # New: OpenAI GPT-5 Nano (free + paid)
+    "openai/gpt-5-nano-2025-08-07": {
+        "aliases": ["gpt-5-nano-2025-08-07"],
+        "pricing": {
+            # TODO: Update with official pricing when available
+            "input_cost_per_million_tokens": 0.00,
+            "output_cost_per_million_tokens": 0.00
+        },
+        "tier_availability": ["free", "paid"]
+    },
         
     "openrouter/deepseek/deepseek-chat": {
         "aliases": ["deepseek"],
@@ -37,6 +48,26 @@ MODELS = {
     },
     
     # Paid tier only models
+    # New: OpenAI GPT-5 (paid)
+    "openai/gpt-5-2025-08-07": {
+        "aliases": ["gpt-5-2025-08-07"],
+        "pricing": {
+            # TODO: Update with official pricing when available
+            "input_cost_per_million_tokens": 0.00,
+            "output_cost_per_million_tokens": 0.00
+        },
+        "tier_availability": ["paid"]
+    },
+    # New: OpenAI GPT-5 Mini (paid)
+    "openai/gpt-5-mini-2025-08-07": {
+        "aliases": ["gpt-5-mini-2025-08-07"],
+        "pricing": {
+            # TODO: Update with official pricing when available
+            "input_cost_per_million_tokens": 0.00,
+            "output_cost_per_million_tokens": 0.00
+        },
+        "tier_availability": ["paid"]
+    },
     "openrouter/deepseek/deepseek-chat-v3-0324": {
         "aliases": ["deepseek/deepseek-chat-v3-0324"],
         "pricing": {
