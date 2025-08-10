@@ -39,14 +39,14 @@ class LLMRetryError(LLMError):
 
 def _has_fixed_temperature(model_name: str) -> bool:
     """Some models only support default temperature (1.0) and reject overrides.
-    For these, we should omit the temperature param entirely.
+    For these, we should omit or normalize the temperature param.
     """
     name = model_name.lower()
+    # Treat any GPT-5 family and OpenAI o1/o3 reasoning models as fixed-temp
     return (
-        name.startswith("openai/gpt-5")
-        or name.startswith("gpt-5")
-        or "o1" in name  # OpenAI o1 models
-        or "o3" in name  # OpenAI o3 models
+        ("gpt-5" in name)  # covers openai/gpt-5*, openrouter/openai/gpt-5*, etc.
+        or ("o1" in name)
+        or ("o3" in name)
     )
 
 
@@ -139,13 +139,22 @@ def prepare_params(
     params = {
         "model": model_name,
         "messages": messages,
-        "response_format": response_format,
-        "top_p": top_p,
         "stream": stream,
     }
 
-    # Only include temperature if model supports overriding it
-    if not _has_fixed_temperature(model_name):
+    # Add optional params only if provided to avoid sending nulls/unsupported keys
+    if response_format is not None:
+        params["response_format"] = response_format
+    if top_p is not None:
+        params["top_p"] = top_p
+
+    # Temperature handling
+    # Some providers (e.g., GPT-5/o1/o3) reject any non-default temperature values and
+    # some SDKs inject a default temperature=0 if not explicitly set.
+    # To prevent errors, force temperature=1.0 for fixed-temp models; otherwise use provided value.
+    if _has_fixed_temperature(model_name):
+        params["temperature"] = 1.0
+    else:
         params["temperature"] = temperature
 
     if api_key:
