@@ -31,10 +31,10 @@ export interface CustomModel {
 // SINGLE SOURCE OF TRUTH for all model data - aligned with backend constants
 export const MODELS = {
   // Free tier models (available to all users)
-  'gpt-5-nano-2025-08-07': {
+  'gpt-5-nano': {
     tier: 'free',
     priority: 105,
-    recommended: true,
+    recommended: false,
     lowQuality: false,
   },
   'claude-sonnet-4': { 
@@ -58,16 +58,16 @@ export const MODELS = {
   },
 
   // Premium/Paid tier models (require subscription)
-  'gpt-5-2025-08-07': {
+  'gpt-5': {
     tier: 'premium',
     priority: 120,
     recommended: true,
     lowQuality: false,
   },
-  'gpt-5-mini-2025-08-07': {
+  'gpt-5-mini': {
     tier: 'premium',
     priority: 110,
-    recommended: true,
+    recommended: false,
     lowQuality: false,
   },
   'sonnet-3.7': { 

@@ -12,8 +12,8 @@ MODELS = {
     },
     
     # New: OpenAI GPT-5 Nano (free + paid)
-    "openai/gpt-5-nano-2025-08-07": {
-        "aliases": ["gpt-5-nano-2025-08-07"],
+    "openai/gpt-5-nano": {
+        "aliases": ["gpt-5-nano"],
         "pricing": {
             "input_cost_per_million_tokens": 0.05,
             "output_cost_per_million_tokens": 0.40
@@ -48,8 +48,8 @@ MODELS = {
     
     # Paid tier only models
     # New: OpenAI GPT-5 (paid)
-    "openai/gpt-5-2025-08-07": {
-        "aliases": ["gpt-5-2025-08-07"],
+    "openai/gpt-5": {
+        "aliases": ["gpt-5"],
         "pricing": {
             "input_cost_per_million_tokens": 1.25,
             "output_cost_per_million_tokens": 10.00
@@ -57,8 +57,8 @@ MODELS = {
         "tier_availability": ["paid"]
     },
     # New: OpenAI GPT-5 Mini (paid)
-    "openai/gpt-5-mini-2025-08-07": {
-        "aliases": ["gpt-5-mini-2025-08-07"],
+    "openai/gpt-5-mini": {
+        "aliases": ["gpt-5-mini"],
         "pricing": {
             "input_cost_per_million_tokens": 0.25,
             "output_cost_per_million_tokens": 2.00
