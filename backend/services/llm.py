@@ -36,6 +36,20 @@ class LLMRetryError(LLMError):
     """Exception raised when retries are exhausted."""
     pass
 
+
+def _has_fixed_temperature(model_name: str) -> bool:
+    """Some models only support default temperature (1.0) and reject overrides.
+    For these, we should omit the temperature param entirely.
+    """
+    name = model_name.lower()
+    return (
+        name.startswith("openai/gpt-5")
+        or name.startswith("gpt-5")
+        or "o1" in name  # OpenAI o1 models
+        or "o3" in name  # OpenAI o3 models
+    )
+
+
 def setup_api_keys() -> None:
     """Set up API keys from environment variables."""
     providers = ['OPENAI', 'ANTHROPIC', 'GROQ', 'OPENROUTER', 'XAI']
@@ -64,6 +78,7 @@ def setup_api_keys() -> None:
         os.environ['AWS_REGION_NAME'] = aws_region
     else:
         logger.warning(f"Missing AWS credentials for Bedrock integration - access_key: {bool(aws_access_key)}, secret_key: {bool(aws_secret_key)}, region: {aws_region}")
+
 
 def get_openrouter_fallback(model_name: str) -> Optional[str]:
     """Get OpenRouter fallback model for a given model name."""
@@ -95,12 +110,14 @@ def get_openrouter_fallback(model_name: str) -> Optional[str]:
     
     return None
 
+
 async def handle_error(error: Exception, attempt: int, max_attempts: int) -> None:
     """Handle API errors with appropriate delays and logging."""
     delay = RATE_LIMIT_DELAY if isinstance(error, litellm.exceptions.RateLimitError) else RETRY_DELAY
     logger.warning(f"Error on attempt {attempt + 1}/{max_attempts}: {str(error)}")
     logger.debug(f"Waiting {delay} seconds before retry...")
     await asyncio.sleep(delay)
+
 
 def prepare_params(
     messages: List[Dict[str, Any]],
@@ -122,11 +139,14 @@ def prepare_params(
     params = {
         "model": model_name,
         "messages": messages,
-        "temperature": temperature,
         "response_format": response_format,
         "top_p": top_p,
         "stream": stream,
     }
+
+    # Only include temperature if model supports overriding it
+    if not _has_fixed_temperature(model_name):
+        params["temperature"] = temperature
 
     if api_key:
         params["api_key"] = api_key
@@ -251,6 +271,7 @@ def prepare_params(
         # xAI models support standard parameters, no special handling needed beyond reasoning_effort
 
     return params
+
 
 async def make_llm_api_call(
     messages: List[Dict[str, Any]],

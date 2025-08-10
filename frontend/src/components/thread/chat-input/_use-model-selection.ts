@@ -120,6 +120,13 @@ export const MODELS = {
   },
 };
 
+// Pretty label overrides for specific model IDs
+const LABEL_OVERRIDES: Record<string, string> = {
+  'gpt-5-2025-08-07': 'GPT 5',
+  'gpt-5-mini-2025-08-07': 'GPT 5 mini',
+  'gpt-5-nano-2025-08-07': 'GPT 5 nano',
+};
+
 // Helper to check if a user can access a model based on subscription status
 export const canAccessModel = (
   subscriptionStatus: SubscriptionStatus,
@@ -214,13 +221,13 @@ export const useModelSelection = () => {
       models = [
         { 
           id: DEFAULT_FREE_MODEL_ID, 
-          label: formatModelName(DEFAULT_FREE_MODEL_ID), 
+          label: LABEL_OVERRIDES[DEFAULT_FREE_MODEL_ID] || formatModelName(DEFAULT_FREE_MODEL_ID), 
           requiresSubscription: false,
           priority: MODELS[DEFAULT_FREE_MODEL_ID]?.priority || 50
         },
         { 
           id: DEFAULT_PREMIUM_MODEL_ID, 
-          label: formatModelName(DEFAULT_PREMIUM_MODEL_ID), 
+          label: LABEL_OVERRIDES[DEFAULT_PREMIUM_MODEL_ID] || formatModelName(DEFAULT_PREMIUM_MODEL_ID), 
           requiresSubscription: true, 
           priority: MODELS[DEFAULT_PREMIUM_MODEL_ID]?.priority || 100
         },
@@ -243,13 +250,16 @@ export const useModelSelection = () => {
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
         
+        // Apply label overrides (e.g., GPT-5 family)
+        const finalLabel = LABEL_OVERRIDES[shortName] || cleanLabel;
+        
         // Get model data from our central MODELS constant
         const modelData = MODELS[shortName] || {};
         const isPremium = model?.requires_subscription || modelData.tier === 'premium' || false;
         
         return {
           id: shortName,
-          label: cleanLabel,
+          label: finalLabel,
           requiresSubscription: isPremium,
           top: modelData.priority >= 90, // Mark high-priority models as "top"
           priority: modelData.priority || 0,
@@ -265,7 +275,7 @@ export const useModelSelection = () => {
           const md: any = (MODELS as any)[id] || {};
           models.push({
             id,
-            label: formatModelName(id),
+            label: LABEL_OVERRIDES[id] || formatModelName(id),
             requiresSubscription: md.tier === 'premium',
             top: (md.priority || 0) >= 90,
             priority: md.priority || 0,

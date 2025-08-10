@@ -15,9 +15,8 @@ MODELS = {
     "openai/gpt-5-nano-2025-08-07": {
         "aliases": ["gpt-5-nano-2025-08-07"],
         "pricing": {
-            # TODO: Update with official pricing when available
-            "input_cost_per_million_tokens": 0.00,
-            "output_cost_per_million_tokens": 0.00
+            "input_cost_per_million_tokens": 0.05,
+            "output_cost_per_million_tokens": 0.40
         },
         "tier_availability": ["free", "paid"]
     },
@@ -52,9 +51,8 @@ MODELS = {
     "openai/gpt-5-2025-08-07": {
         "aliases": ["gpt-5-2025-08-07"],
         "pricing": {
-            # TODO: Update with official pricing when available
-            "input_cost_per_million_tokens": 0.00,
-            "output_cost_per_million_tokens": 0.00
+            "input_cost_per_million_tokens": 1.25,
+            "output_cost_per_million_tokens": 10.00
         },
         "tier_availability": ["paid"]
     },
@@ -62,9 +60,8 @@ MODELS = {
     "openai/gpt-5-mini-2025-08-07": {
         "aliases": ["gpt-5-mini-2025-08-07"],
         "pricing": {
-            # TODO: Update with official pricing when available
-            "input_cost_per_million_tokens": 0.00,
-            "output_cost_per_million_tokens": 0.00
+            "input_cost_per_million_tokens": 0.25,
+            "output_cost_per_million_tokens": 2.00
         },
         "tier_availability": ["paid"]
     },
