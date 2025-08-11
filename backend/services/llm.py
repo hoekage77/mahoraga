@@ -52,13 +52,19 @@ def _has_fixed_temperature(model_name: str) -> bool:
 
 def setup_api_keys() -> None:
     """Set up API keys from environment variables."""
-    providers = ['OPENAI', 'ANTHROPIC', 'GROQ', 'OPENROUTER', 'XAI']
+    # Added GOOGLE to providers list
+    providers = ['OPENAI', 'ANTHROPIC', 'GROQ', 'OPENROUTER', 'XAI', 'GOOGLE']
     for provider in providers:
         key = getattr(config, f'{provider}_API_KEY')
         if key:
             logger.debug(f"API key set for provider: {provider}")
         else:
             logger.warning(f"No API key found for provider: {provider}")
+
+    # Export Google API key if present so SDKs can pick it up
+    if config.GOOGLE_API_KEY:
+        os.environ['GOOGLE_API_KEY'] = config.GOOGLE_API_KEY
+        logger.debug("Set GOOGLE_API_KEY in environment for direct Google AI usage")
 
     # Set up OpenRouter API base if not already set
     if config.OPENROUTER_API_KEY and config.OPENROUTER_API_BASE:
@@ -86,6 +92,15 @@ def get_openrouter_fallback(model_name: str) -> Optional[str]:
     if model_name.startswith("openrouter/"):
         return None
     
+    # If the primary model is a direct Google model, prefer a Google-on-OpenRouter fallback
+    google_fallbacks = {
+        "google/gemini-2.5-pro": "openrouter/google/gemini-2.5-pro",
+        "google/gemini-2.5-flash": "openrouter/google/gemini-2.5-flash-preview-05-20",
+        "google/gemini-2.5-flash-preview-05-20": "openrouter/google/gemini-2.5-flash-preview-05-20",
+    }
+    if model_name in google_fallbacks:
+        return google_fallbacks[model_name]
+
     # Map models to their OpenRouter equivalents
     fallback_mapping = {
         "anthropic/claude-3-7-sonnet-latest": "openrouter/anthropic/claude-3.7-sonnet",
@@ -107,6 +122,8 @@ def get_openrouter_fallback(model_name: str) -> Optional[str]:
         return "openrouter/anthropic/claude-sonnet-4"
     elif "xai" in model_name.lower() or "grok" in model_name.lower():
         return "openrouter/x-ai/grok-4"
+    elif model_name.lower().startswith("google/") or "gemini" in model_name.lower():
+        return "openrouter/google/gemini-2.5-flash-preview-05-20"
     
     return None
 
@@ -206,6 +223,14 @@ def prepare_params(
             params["extra_headers"] = extra_headers
             logger.debug(f"Added OpenRouter site URL and app name to headers")
 
+    # Google AI (Gemini) direct parameters
+    if model_name.lower().startswith("google/") or "gemini" in model_name.lower():
+        # LiteLLM uses GOOGLE_API_KEY env var; no special handling needed here.
+        # But we can set api_key explicitly if provided/configured.
+        if config.GOOGLE_API_KEY and "api_key" not in params:
+            params["api_key"] = config.GOOGLE_API_KEY
+        logger.debug("Configured params for direct Google AI (Gemini) model")
+
     # Add Bedrock-specific parameters
     if model_name.startswith("bedrock/"):
         logger.debug(f"Preparing AWS Bedrock parameters for model: {model_name}")
@@ -215,12 +240,14 @@ def prepare_params(
             logger.debug(f"Auto-set model_id for Claude 3.7 Sonnet: {params['model_id']}")
 
     fallback_model = get_openrouter_fallback(model_name)
-    if fallback_model:
+    if fallback_model and config.OPENROUTER_API_KEY:
         params["fallbacks"] = [{
             "model": fallback_model,
             "messages": messages,
         }]
         logger.debug(f"Added OpenRouter fallback for model: {model_name} to {fallback_model}")
+    elif fallback_model and not config.OPENROUTER_API_KEY:
+        logger.debug("OpenRouter fallback identified but OPENROUTER_API_KEY is not set; skipping fallback")
 
     # Apply Anthropic prompt caching (minimal implementation)
     # Check model name *after* potential modifications (like adding bedrock/ prefix)

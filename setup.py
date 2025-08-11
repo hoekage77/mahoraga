@@ -129,6 +129,7 @@ def load_existing_env_vars():
             "OPENAI_API_KEY": backend_env.get("OPENAI_API_KEY", ""),
             "ANTHROPIC_API_KEY": backend_env.get("ANTHROPIC_API_KEY", ""),
             "OPENROUTER_API_KEY": backend_env.get("OPENROUTER_API_KEY", ""),
+            "GOOGLE_API_KEY": backend_env.get("GOOGLE_API_KEY", ""),
             "MODEL_TO_USE": backend_env.get("MODEL_TO_USE", ""),
         },
         "search": {
@@ -675,7 +676,7 @@ class SetupWizard:
             )
         else:
             print_info(
-                "Suna requires at least one LLM provider. Supported: OpenAI, Anthropic, OpenRouter."
+                "Suna requires at least one LLM provider. Supported: OpenAI, Anthropic, OpenRouter, Google."
             )
 
         # Don't clear existing keys if we're updating
@@ -691,6 +692,7 @@ class SetupWizard:
                 "1": ("OpenAI", "OPENAI_API_KEY"),
                 "2": ("Anthropic", "ANTHROPIC_API_KEY"),
                 "3": ("OpenRouter", "OPENROUTER_API_KEY"),
+                "4": ("Google (Gemini)", "GOOGLE_API_KEY"),
             }
             print(
                 f"\n{Colors.CYAN}Select LLM providers to configure (e.g., 1,3):{Colors.ENDC}"
@@ -738,6 +740,9 @@ class SetupWizard:
                 self.env_vars["llm"][
                     "MODEL_TO_USE"
                 ] = "anthropic/claude-sonnet-4-20250514"
+            elif self.env_vars["llm"].get("GOOGLE_API_KEY"):
+                # Prefer direct Google Gemini when Google key is set
+                self.env_vars["llm"]["MODEL_TO_USE"] = "google/gemini-2.5-flash"
             elif self.env_vars["llm"].get("OPENROUTER_API_KEY"):
                 self.env_vars["llm"][
                     "MODEL_TO_USE"

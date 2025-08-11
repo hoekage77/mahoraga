@@ -37,8 +37,9 @@ MODELS = {
         },
         "tier_availability": ["free", "paid"]
     },
-    "openrouter/google/gemini-2.5-flash-preview-05-20": {
-        "aliases": ["gemini-flash-2.5"],
+    # Prefer direct Google Gemini for Flash; keep OpenRouter alias mapping via aliases below
+    "google/gemini-2.5-flash": {
+        "aliases": ["gemini-flash-2.5", "openrouter/google/gemini-2.5-flash-preview-05-20"],
         "pricing": {
             "input_cost_per_million_tokens": 0.15,
             "output_cost_per_million_tokens": 0.60
@@ -73,8 +74,9 @@ MODELS = {
         },
         "tier_availability": ["paid"]
     },
-    "openrouter/google/gemini-2.5-pro": {
-        "aliases": ["google/gemini-2.5-pro"],
+    # Prefer direct Google Gemini for Pro; keep OpenRouter alias mapping via aliases
+    "google/gemini-2.5-pro": {
+        "aliases": ["openrouter/google/gemini-2.5-pro", "google/gemini-2.5-pro"],
         "pricing": {
             "input_cost_per_million_tokens": 1.25,
             "output_cost_per_million_tokens": 10.00
@@ -168,7 +170,8 @@ def _generate_model_structures():
         elif model_name.startswith("openrouter/qwen/"):
             legacy_name = model_name.replace("openrouter/", "")
             pricing[legacy_name] = config["pricing"]
-        elif model_name.startswith("openrouter/google/"):
+        elif model_name.startswith("openrouter/google/") or model_name.startswith("google/"):
+            # Add pricing for both direct google/* and openrouter/google/* variants
             legacy_name = model_name.replace("openrouter/", "")
             pricing[legacy_name] = config["pricing"]
         elif model_name.startswith("anthropic/"):

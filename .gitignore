@@ -207,3 +207,4 @@ CEO_PRESENTATION.html
 MERMAID_VIEWER.html
 PROJECT_TRACKER.html
 SYSTEM_ARCHITECTURE.md
+.github/workflows/deploy.yml

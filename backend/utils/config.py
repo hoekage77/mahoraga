@@ -175,6 +175,8 @@ class Configuration:
     GROQ_API_KEY: Optional[str] = None
     OPENROUTER_API_KEY: Optional[str] = None
     XAI_API_KEY: Optional[str] = None
+    # Added: Google AI (Gemini) direct key
+    GOOGLE_API_KEY: Optional[str] = None
     OPENROUTER_API_BASE: Optional[str] = "https://openrouter.ai/api/v1"
     OR_SITE_URL: Optional[str] = "https://kortix.ai"
     OR_APP_NAME: Optional[str] = "Kortix AI"    
@@ -315,4 +317,4 @@ class Configuration:
         }
 
 # Create a singleton instance
-config = Configuration() 
+config = Configuration()
