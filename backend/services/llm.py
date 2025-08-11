@@ -159,6 +159,13 @@ def prepare_params(
         "stream": stream,
     }
 
+    # Normalize model name for LiteLLM provider expectations
+    # LiteLLM expects provider prefix 'gemini/' for Google AI models, not 'google/'
+    if model_name.lower().startswith("google/"):
+        translated_model = "gemini/" + model_name.split("/", 1)[1]
+        params["model"] = translated_model
+        logger.debug(f"Translated model for LiteLLM: {model_name} -> {translated_model}")
+
     # Add optional params only if provided to avoid sending nulls/unsupported keys
     if response_format is not None:
         params["response_format"] = response_format
