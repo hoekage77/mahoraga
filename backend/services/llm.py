@@ -174,12 +174,8 @@ def prepare_params(
         params["model"] = translated_model
         logger.debug(f"Translated model for LiteLLM: {model_name} -> {translated_model}")
 
-    # Provide an alias map so even if 'google/...' leaks through, LiteLLM will remap it
-    alias_map = {
-        "google/gemini-2.5-pro": "gemini/gemini-2.5-pro",
-        "google/gemini-2.5-flash": "gemini/gemini-2.5-flash",
-    }
-    params["model_alias_map"] = alias_map
+    # Remove alias map injection: pass only supported params to providers.
+    # We already normalize google/* -> gemini/* above.
 
     # Add optional params only if provided to avoid sending nulls/unsupported keys
     if response_format is not None:
