@@ -64,7 +64,9 @@ def setup_api_keys() -> None:
     # Export Google API key if present so SDKs can pick it up
     if config.GOOGLE_API_KEY:
         os.environ['GOOGLE_API_KEY'] = config.GOOGLE_API_KEY
-        logger.debug("Set GOOGLE_API_KEY in environment for direct Google AI usage")
+        # Also set GEMINI_API_KEY as some SDKs/libraries look for this name
+        os.environ['GEMINI_API_KEY'] = config.GOOGLE_API_KEY
+        logger.debug("Set GOOGLE_API_KEY and GEMINI_API_KEY in environment for direct Google AI usage")
 
     # Set up OpenRouter API base if not already set
     if config.OPENROUTER_API_KEY and config.OPENROUTER_API_BASE:
@@ -92,14 +94,20 @@ def get_openrouter_fallback(model_name: str) -> Optional[str]:
     if model_name.startswith("openrouter/"):
         return None
     
-    # If the primary model is a direct Google model, prefer a Google-on-OpenRouter fallback
-    google_fallbacks = {
+    name_lower = model_name.lower()
+    
+    # If the primary model is a direct Google/Gemini model, prefer a Google-on-OpenRouter fallback
+    google_gemini_fallbacks = {
+        # Explicit mappings for both google/* and gemini/* inputs
         "google/gemini-2.5-pro": "openrouter/google/gemini-2.5-pro",
+        "gemini/gemini-2.5-pro": "openrouter/google/gemini-2.5-pro",
         "google/gemini-2.5-flash": "openrouter/google/gemini-2.5-flash-preview-05-20",
+        "gemini/gemini-2.5-flash": "openrouter/google/gemini-2.5-flash-preview-05-20",
         "google/gemini-2.5-flash-preview-05-20": "openrouter/google/gemini-2.5-flash-preview-05-20",
+        "gemini/gemini-2.5-flash-preview-05-20": "openrouter/google/gemini-2.5-flash-preview-05-20",
     }
-    if model_name in google_fallbacks:
-        return google_fallbacks[model_name]
+    if model_name in google_gemini_fallbacks:
+        return google_gemini_fallbacks[model_name]
 
     # Map models to their OpenRouter equivalents
     fallback_mapping = {
@@ -118,11 +126,11 @@ def get_openrouter_fallback(model_name: str) -> Optional[str]:
             return value
     
     # Default fallbacks by provider
-    if "claude" in model_name.lower() or "anthropic" in model_name.lower():
+    if "claude" in name_lower or "anthropic" in name_lower:
         return "openrouter/anthropic/claude-sonnet-4"
-    elif "xai" in model_name.lower() or "grok" in model_name.lower():
+    elif "xai" in name_lower or "grok" in name_lower:
         return "openrouter/x-ai/grok-4"
-    elif model_name.lower().startswith("google/") or "gemini" in model_name.lower():
+    elif name_lower.startswith("google/") or name_lower.startswith("gemini/") or "gemini" in name_lower:
         return "openrouter/google/gemini-2.5-flash-preview-05-20"
     
     return None
@@ -165,6 +173,13 @@ def prepare_params(
         translated_model = "gemini/" + model_name.split("/", 1)[1]
         params["model"] = translated_model
         logger.debug(f"Translated model for LiteLLM: {model_name} -> {translated_model}")
+
+    # Provide an alias map so even if 'google/...' leaks through, LiteLLM will remap it
+    alias_map = {
+        "google/gemini-2.5-pro": "gemini/gemini-2.5-pro",
+        "google/gemini-2.5-flash": "gemini/gemini-2.5-flash",
+    }
+    params["model_alias_map"] = alias_map
 
     # Add optional params only if provided to avoid sending nulls/unsupported keys
     if response_format is not None:
@@ -356,12 +371,18 @@ async def make_llm_api_call(
         LLMRetryError: If API call fails after retries
         LLMError: For other API-related errors
     """
+    # Normalize model name early to ensure correct provider is used
+    normalized_model_name = model_name
+    if model_name.lower().startswith("google/"):
+        normalized_model_name = "gemini/" + model_name.split("/", 1)[1]
+        logger.debug(f"Normalizing model for LiteLLM provider: {model_name} -> {normalized_model_name}")
+
     # debug <timestamp>.json messages
     logger.info(f"Making LLM API call to model: {model_name} (Thinking: {enable_thinking}, Effort: {reasoning_effort})")
     logger.info(f"📡 API Call: Using model {model_name}")
     params = prepare_params(
         messages=messages,
-        model_name=model_name,
+        model_name=normalized_model_name,
         temperature=temperature,
         max_tokens=max_tokens,
         response_format=response_format,
@@ -376,6 +397,12 @@ async def make_llm_api_call(
         reasoning_effort=reasoning_effort
     )
 
+    # Log final model being sent to LiteLLM for debugging provider issues
+    try:
+        logger.debug(f"Final provider model sent to LiteLLM: {params.get('model')}")
+    except Exception:
+        pass
+
     # Defensive guard: ensure fixed-temp models never send temperature=0
     if _has_fixed_temperature(model_name) and params.get("temperature") != 1.0:
         logger.warning(f"Fixed-temp model detected ({model_name}). Forcing temperature to 1.0 before request.")
@@ -389,7 +416,7 @@ async def make_llm_api_call(
             # logger.debug(f"API request parameters: {json.dumps(params, indent=2)}")
 
             response = await litellm.acompletion(**params)
-            logger.debug(f"Successfully received API response from {model_name}")
+            logger.debug(f"Successfully received API response from {normalized_model_name}")
             # logger.debug(f"Response: {response}")
             return response
 
